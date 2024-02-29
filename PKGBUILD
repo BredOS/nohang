@@ -11,8 +11,10 @@ license=('MIT')
 source=(
 	"$pkgname::git+https://github.com/hakavlad/nohang.git#commit=bf477da78041a1fce8a82d04da422ef60e86c556"
 	"patch.diff"
+	"nohang-desktop.conf"
 )
 md5sums=(
+    'SKIP'
     'SKIP'
     'SKIP'
 )
@@ -28,8 +30,11 @@ optdepends=(
 makedepends=(
 	'git'
 )
-provides=('nohang')
-conflicts=('nohang-git')
+provides=('bredos-nohang')
+conflicts=(
+    'nohang-git'
+    'nohang'
+)
 backup=(
 	'etc/nohang/nohang.conf'
 	'etc/nohang/nohang-desktop.conf'
@@ -39,6 +44,7 @@ backup=(
 package() {
 	cd "${srcdir}/${pkgname}" || exit 2
 	git apply "${srcdir}/patch.diff"
+	cp "${srcdir}/nohang-desktop.conf" "conf/nohang/nohang-desktop.conf.in"
 	make \
 		DESTDIR="${pkgdir}" \
 		PREFIX="/usr" \
