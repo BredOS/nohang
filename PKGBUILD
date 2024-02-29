@@ -1,15 +1,15 @@
 # Maintainer: Bill Sideris <bill88t@feline.gr>
 # shellcheck disable=SC2034,SC2148,SC2154,SC2164
 
-pkgname=nohang-git
-pkgver=0.2.0.r19.gbf477da
+pkgname=bredos-nohang
+pkgver=0.2.0
 pkgrel=1
-pkgdesc="A sophisticated low memory handler"
+pkgdesc="A sophisticated low memory handler, tailored for SBCs"
 arch=('any')
 url="https://github.com/hakavlad/nohang"
 license=('MIT')
 source=(
-	"$pkgname::git+https://github.com/hakavlad/nohang.git#branch=master"
+	"$pkgname::git+https://github.com/hakavlad/nohang.git#commit=bf477da78041a1fce8a82d04da422ef60e86c556"
 	"patch.diff"
 )
 md5sums=(
@@ -29,18 +29,12 @@ makedepends=(
 	'git'
 )
 provides=('nohang')
-conflicts=('nohang')
+conflicts=('nohang-git')
 backup=(
 	'etc/nohang/nohang.conf'
 	'etc/nohang/nohang-desktop.conf'
 	'etc/logrotate.d/nohang'
 )
-
-pkgver() {
-	cd "${srcdir}/${pkgname}" || exit 2
-	set -o pipefail
-	git describe --tags --long | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g'
-}
 
 package() {
 	cd "${srcdir}/${pkgname}" || exit 2
