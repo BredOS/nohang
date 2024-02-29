@@ -1,8 +1,8 @@
-# Maintainer: Yauheni Kirylau <actionless dot loveless AT gmail.com>
+# Maintainer: Bill Sideris <bill88t@feline.gr>
 # shellcheck disable=SC2034,SC2148,SC2154,SC2164
 
 pkgname=nohang-git
-pkgver=0.2.0.r8.gb84cf12
+pkgver=0.2.0.r19.gbf477da
 pkgrel=1
 pkgdesc="A sophisticated low memory handler"
 arch=('any')
@@ -10,8 +10,12 @@ url="https://github.com/hakavlad/nohang"
 license=('MIT')
 source=(
 	"$pkgname::git+https://github.com/hakavlad/nohang.git#branch=master"
+	"patch.diff"
 )
-md5sums=('SKIP')
+md5sums=(
+    'SKIP'
+    'SKIP'
+)
 depends=(
 	'python'
 	'systemd'
@@ -40,6 +44,7 @@ pkgver() {
 
 package() {
 	cd "${srcdir}/${pkgname}" || exit 2
+	git apply "${srcdir}/patch.diff"
 	make \
 		DESTDIR="${pkgdir}" \
 		PREFIX="/usr" \

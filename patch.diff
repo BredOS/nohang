@@ -1,0 +1,29 @@
+diff --git a/Makefile b/Makefile
+index 4afdca2..77ffdeb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -96,9 +96,6 @@ chcon:
+ 	chcon -t systemd_unit_file_t $(DESTDIR)$(SYSTEMDUNITDIR)/nohang.service || :
+ 	chcon -t systemd_unit_file_t $(DESTDIR)$(SYSTEMDUNITDIR)/nohang-desktop.service || :
+ 
+-daemon-reload:
+-	systemctl daemon-reload || :
+-
+ build_deb: base units
+ 
+ reinstall-deb:
+@@ -106,7 +103,7 @@ reinstall-deb:
+ 	deb/build.sh
+ 	sudo apt install --reinstall ./deb/package.deb
+ 
+-install: base units chcon daemon-reload
++install: base units chcon
+ 	# This is fine.
+ 
+ install-openrc: base
+@@ -154,4 +151,4 @@ uninstall-openrc:
+ 	rm -fv $(DESTDIR)$(SYSCONFDIR)/init.d/nohang
+ 	rm -fv $(DESTDIR)$(SYSCONFDIR)/init.d/nohang-desktop
+ 
+-uninstall: uninstall-base uninstall-units daemon-reload uninstall-openrc
++uninstall: uninstall-base uninstall-units uninstall-openrc
