@@ -3,7 +3,7 @@
 
 pkgname=bredos-nohang
 pkgver=0.2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="A sophisticated low memory handler, tailored for SBCs"
 arch=('any')
 url="https://github.com/hakavlad/nohang"
