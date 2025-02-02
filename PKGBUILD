@@ -3,7 +3,7 @@
 
 pkgname=bredos-nohang
 pkgver=0.2.0
-pkgrel=2
+pkgrel=3
 pkgdesc="A sophisticated low memory handler, tailored for SBCs"
 arch=('any')
 url="https://github.com/hakavlad/nohang"
@@ -54,3 +54,14 @@ package() {
 		install
 	install -Dm644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
+
+post_install() {
+    systemctl enable --now nohang-desktop.service
+}
+post_upgrade() {
+    post_install
+}
+post_remove() {
+    systemctl disable --now nohang-desktop.service
+}
+
